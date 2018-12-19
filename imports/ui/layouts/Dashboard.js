@@ -5,6 +5,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
+import { NavLink as Link } from 'react-router-dom';
 import {
     Navbar
 } from './../components';
@@ -49,7 +50,7 @@ const Dashboard = ({children, menus = SidebarMenus, ...rest}) => {
             <Nav className="list-unstyled components" style={{ display: 'block' }}>
                 {menus.map((menu, idx) => 
                     <NavItem key={idx}>
-                        <NavLink href={menu.url}>
+                        <NavLink tag={Link} to={menu.url}>
                             <i className={`icon-${menu.icon}`} />
                             {menu.name}
                         </NavLink>

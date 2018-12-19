@@ -22,6 +22,10 @@ export class UsersPage extends Component {
     });
   }
 
+  submitNewUserForm = doc => {
+    console.log('doc', doc);
+  }  
+
   render() {
     const { users = [] } = this.props;
     const { showNewUserModal } = this.state;
@@ -78,6 +82,7 @@ export class UsersPage extends Component {
         <NewUserModal
           isOpen={showNewUserModal} 
           toggle={this.toggleNewUserModal}
+          onSubmit={this.submitNewUserForm}
         />
       </div>
     )

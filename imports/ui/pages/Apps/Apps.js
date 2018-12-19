@@ -21,6 +21,10 @@ export class Apps extends Component {
     });
   }
 
+  submitNewAppForm = doc => {
+    console.log(doc);
+  }
+  
   render() {
     const { apps = [] } = this.props;
     const { showNewAppModal } = this.state;
@@ -68,6 +72,7 @@ export class Apps extends Component {
         <NewAppModal
           isOpen={showNewAppModal} 
           toggle={this.toggleNewAppModal}
+          onSubmit={this.submitNewAppForm}
         />
       </div>
     );
