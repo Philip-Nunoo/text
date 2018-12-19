@@ -1,0 +1,30 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "start": "meteor run -p 3400",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.5",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "classnames": "^2.2.6",
+    "connect-route": "^0.1.5",
+    "meteor-node-stubs": "^0.4.1",
+    "moment": "^2.23.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-router-dom": "^4.3.1",
+    "reactstrap": "^6.5.0"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.jsx",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  }
+}

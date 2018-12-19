@@ -1,0 +1,5 @@
+{
+    "name": "label",
+    "private": true,
+    "main": "./Label.js"
+}

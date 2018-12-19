@@ -1,0 +1,14 @@
+.app-breadcrumb {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 0 25px 0;
+
+    .head-title {
+        margin: 0;
+        padding: 0 2.25rem 0 0;
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: #333;
+    }
+}

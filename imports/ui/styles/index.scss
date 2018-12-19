@@ -1,0 +1,53 @@
+
+@import '_variables.scss';
+
+// @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100i,300,300i,400,400i,500,500i');
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import '_button.scss';
+@import '_label.scss';
+@import '_navbar.scss';
+@import '_breadcrumb.scss';
+@import '_portlet.scss';
+
+body {
+    // font-family: 'Poppins', sans-serif;
+    // font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background: #fafafa;
+    font-size: 0.9rem;
+}
+
+p {
+    // font-family: 'Poppins', sans-serif;
+    // font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+body, html, #root {
+    height: 100vh;
+}
+
+ul {
+    ul {
+        a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #6d7fcc;
+        }
+    }
+}
