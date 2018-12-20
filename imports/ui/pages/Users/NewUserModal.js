@@ -74,6 +74,7 @@ const NewUserModal = ({
                     ref={ref => formRef = ref}
                     schema={NewUserSchema}
                     onSubmit={onSubmit}
+                    autoComplete="off"
                 >
                     <AutoFields />
                 </AutoForm>

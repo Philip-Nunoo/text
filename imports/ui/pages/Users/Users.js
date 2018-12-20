@@ -1,5 +1,6 @@
 //@flow
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import Users from '/imports/api/Users';
 import {
@@ -23,7 +24,13 @@ export class UsersPage extends Component {
   }
 
   submitNewUserForm = doc => {
-    console.log('doc', doc);
+    Meteor.call('Users.addNewUser', doc, (error) => {
+      if (error) {
+        console.error(error);
+      } else {
+        this.toggleNewUserModal();
+      }
+    });
   }  
 
   render() {
