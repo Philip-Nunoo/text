@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import {
   Col,
   Container,
@@ -8,19 +9,18 @@ import {
 import SimpleSchema from 'simpl-schema';
 import {
   AutoForm,
-  AutoField,
+  AutoFields,
   SubmitField,
   TextField,
   ValidatedForm
 } from 'uniforms-bootstrap4';
 
 const LoginSchema = new SimpleSchema({
-  email: {
+  user: {
     type: String,
-    label: 'Email Address',
+    label: 'Email or Username',
     uniforms: {
-      placeholder: 'name@address.com',
-      type: 'email'
+      placeholder: 'Email / username',
     }
   },
   password: {
@@ -43,9 +43,13 @@ const Login = () => {
           <p className="text-muted text-center mb-5">
             TSF online sms portal
           </p>
-          <AutoForm schema={LoginSchema}>
-            <AutoField name="email" />
-            <AutoField name="password" />
+          <AutoForm
+            schema={LoginSchema}
+            onSubmit={({ user, password }) => {
+              Meteor.loginWithPassword(user, password);
+            }}
+          >
+            <AutoFields />
             <SubmitField inputClassName="btn btn-lg btn-block btn-primary mb-3" />
           </AutoForm>
         </Col>

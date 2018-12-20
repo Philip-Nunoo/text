@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base'
 import Apps from '/imports/api/Apps';
 import './api/v1';
 
@@ -22,7 +23,7 @@ Meteor.startup(() => {
     
     const adminId = Accounts.createUser({
       username: "admin",
-      emails: "admin@midastech.com",
+      email: "admin@midastech.com",
       password: "madmin",
       profile: { firstName: "Midas", lastName: "Technology" }
     });
