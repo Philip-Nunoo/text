@@ -5,7 +5,7 @@ import Apps from '/imports/api/Apps';
 import '/imports/api';
 import './api/v1';
 
-Meteor.startup(() => {
+Meteor.startup(() => {  
   //Create Master Admin if none exists
   if (Roles.getUsersInRole('super-admin', Roles.GLOBAL_GROUP).count() == 0) {
     const adminId = Accounts.createUser({

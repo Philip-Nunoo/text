@@ -22,14 +22,14 @@ export class Apps extends Component {
     });
   }
 
-  submitNewAppForm = doc => {
+  submitNewAppForm = doc => {    
     Meteor.call('App.create', doc, error => {
       if (error) {
         console.error(error);
       } else {
         this.toggleNewAppModal();
       }
-    })
+    });
   }
   
   render() {
@@ -67,7 +67,7 @@ export class Apps extends Component {
                   <tr key={app._id}>
                     <td/>
                     <td>{app.name}</td>
-                    <td>{app.apiKey || 'No api key set'}</td>
+                    <td>{app.apiKey ? app.apiKey.key : 'No api key set'}</td>
                     <td>{app.assignedUser}</td>
                     <td><Button color="primary">View</Button></td>
                   </tr>

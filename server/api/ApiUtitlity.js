@@ -3,11 +3,9 @@ import Apps from '/imports/api/Apps';
 export default {
     authentication: function (apiKey, apiSecret) {
         const app = Apps.findOne({
-            apiKeys: {
-                $elemMatch: {
-                    key: apiKey,
-                    secret: apiSecret
-                }
+            apiKey: {
+                key: apiKey,
+                secret: apiSecret
             }
         }, { fields: { "_id": 1 }});
         console.log('app', app);

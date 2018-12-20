@@ -44,7 +44,6 @@ app.use(Meteor.bindEnvironment(connectRoute((router) => {
         };
 
         if (validApp) {
-            console.log(req.body);
             const { to, message } = req.body;
             const smsRequestId = SmsRequests.insert({
                 to,
@@ -54,6 +53,7 @@ app.use(Meteor.bindEnvironment(connectRoute((router) => {
             })
             response = {
                 referenceId: smsRequestId,
+                message: 'Message successfully received.',
                 status: 'pending'
             };
         }
