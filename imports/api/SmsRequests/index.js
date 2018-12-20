@@ -14,6 +14,6 @@ SmsRequests.before.update(function (userId, doc, fieldNames, modifier, options) 
 
 SmsRequests.after.insert(function (userId, doc) {
     console.log('send sms message to', doc.to);
-    
 });
+
 export default SmsRequests;

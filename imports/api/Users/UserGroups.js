@@ -1,5 +1,6 @@
 export default {
     admin: {
+        name: 'admin',
         roles: [
             'create-user', 
             'update-user',

@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import ClientApps from '/imports/api/Apps';
 import {
@@ -22,7 +23,13 @@ export class Apps extends Component {
   }
 
   submitNewAppForm = doc => {
-    console.log(doc);
+    Meteor.call('App.create', doc, error => {
+      if (error) {
+        console.error(error);
+      } else {
+        this.toggleNewAppModal();
+      }
+    })
   }
   
   render() {
@@ -60,7 +67,7 @@ export class Apps extends Component {
                   <tr key={app._id}>
                     <td/>
                     <td>{app.name}</td>
-                    <td>{app.apiKeys.length}</td>
+                    <td>{app.apiKey || 'No api key set'}</td>
                     <td>{app.assignedUser}</td>
                     <td><Button color="primary">View</Button></td>
                   </tr>

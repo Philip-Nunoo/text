@@ -12,7 +12,11 @@ Meteor.methods({
         group,
         ...userDoc
     }) {
-        if(!Roles.userIsInRole(this.userId, 'super-admin', 'admin')) {
+        if(!Roles.userIsInRole(
+            this.userId, 
+            ['super-admin', ...UserGroups.admin.roles],
+            UserGroups.admin.name
+        )) {
             throw new Meteor.Error('unauthorized');
         }
         
@@ -26,7 +30,7 @@ Meteor.methods({
         };
 
         const userId = Accounts.createUser(options);
-        Roles.addUsersToRoles(userId, UserGroups[group], group);
+        Roles.addUsersToRoles(userId, UserGroups[group].roles, group);
         
         return { userId };
         
