@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use(Meteor.bindEnvironment(connectRoute((router) => {
-    router.get(`${Config.SMS}/single`, (req, res) => {
+    router.post(`${Config.SMS}/single`, (req, res) => {
         const apiKey = req.headers['x-api-key'];
         const apiSecret = req.headers['x-api-secret'];
         
@@ -61,4 +61,46 @@ app.use(Meteor.bindEnvironment(connectRoute((router) => {
         const prettyResponse = JSON.stringify({ response }, null, 2)
         res.end(prettyResponse);
     });
+
+    router.get(`${Config.SMS}/status`, (req, res) => {
+        const apiKey = req.headers['x-api-key'];
+        const apiSecret = req.headers['x-api-secret'];
+
+        const validApp = ApiUtility.authentication(apiKey, apiSecret);
+
+        let response = {
+            error: 401,
+            message: "Invalid API key."
+        };
+
+        if (validApp) {
+            const {
+                referenceId
+            } = req.body;
+            const smsRequest = SmsRequests.findOne({
+                _id: referenceId,
+                origin: validApp
+            });
+
+            if (!smsRequest) {
+                response = {
+                    message: 'No sms received with the following reference'
+                };
+            } else {
+                response = {
+                    referenceId,
+                    message: 'Message successfully received.',
+                    status: smsRequest.status,
+                    to: smsRequest.to,
+                    dateReceived: new Date(smsRequest.createdAt),
+                    dateProcessed: new Date(smsRequest.modifiedAt)
+                };
+            }
+        }
+
+        const prettyResponse = JSON.stringify({
+            response
+        }, null, 2)
+        res.end(prettyResponse);
+    })
 })));

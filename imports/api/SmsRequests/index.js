@@ -44,7 +44,8 @@ SmsRequests.after.insert(function (userId, doc) {
                         _id: doc._id
                     }, {
                         $set: {
-                            status: 'scheduled'
+                            status: 'scheduled',
+                            transactionId: result.data.transaction_id
                         }
                     });                
                 }

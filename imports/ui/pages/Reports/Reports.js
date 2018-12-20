@@ -2,7 +2,6 @@
 import React from 'react';
 import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
-// import reportsJson from './report_example';
 import SmsRequests from '/imports/api/SmsRequests';
 import {
   Breadcrumb,
