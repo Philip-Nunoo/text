@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'seed-fonts';
+  src:  url('./fonts/seed-fonts.eot?fz88ry');
+  src:  url('./fonts/seed-fonts.eot?fz88ry#iefix') format('embedded-opentype'),
+    url('./fonts/seed-fonts.ttf?fz88ry') format('truetype'),
+    url('./fonts/seed-fonts.woff?fz88ry') format('woff'),
+    url('./fonts/seed-fonts.svg?fz88ry#seed-fonts') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'seed-fonts' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-podcast:before {
+  content: "\e91c";
+}
+.icon-reports:before {
+  content: "\e922";
+}
+.icon-bell:before {
+  content: "\e951";
+}
+.icon-users:before {
+  content: "\e972";
+}
+.icon-cog:before {
+  content: "\e994";
+}
+.icon-meter:before {
+  content: "\e9a6";
+}
+.icon-sphere:before {
+  content: "\e9c9";
+}
