@@ -10,10 +10,7 @@ import SimpleSchema from 'simpl-schema';
 import {
     AutoForm,
     AutoFields,
-    SubmitField,
-    TextField,
-    LongTextField,
-    ValidatedForm
+    LongTextField
 } from 'uniforms-bootstrap4';
 
 const NewAppSchema = new SimpleSchema({

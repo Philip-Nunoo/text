@@ -2,10 +2,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     NavLink,
@@ -14,6 +10,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import { Roles } from 'meteor/alanning:roles';
 import { NavLink as Link } from 'react-router-dom';
 import Config, {
     SidebarMenus
@@ -21,12 +18,10 @@ import Config, {
 import './dashboard.css';
 
 class Dashboard extends Component {
-    state = { isOpen: false };
-
     render() {
         const {
             children, 
-            menus = SidebarMenus, 
+            menus = SidebarMenus,
             ...rest
         } = this.props;
 
@@ -68,7 +63,18 @@ class Dashboard extends Component {
                         </div>
                     </nav>
                     <div className="main">
-                        {children}
+                        {
+                            React.cloneElement(
+                                children,
+                                {
+                                    isAdmin: Roles.userIsInRole(
+                                        Meteor.userId(),
+                                        ['super-admin', 'create-app']
+                                    ),
+                                    ...rest
+                                }
+                            )
+                        }
                     </div>
                 </div>
             </div>
@@ -76,4 +82,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+export default Dashboard;

@@ -1,0 +1,5 @@
+{
+    "name": "settings",
+    "main": "./Settings.js",
+    "private": true
+}

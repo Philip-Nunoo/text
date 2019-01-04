@@ -17,8 +17,6 @@ SmsRequests.after.insert(function (userId, doc) {
     console.log('send sms message to', doc.to);
     
     if (doc.to) {
-        var request = require("request");
-
         var options = {
             method: 'POST',
             url: 'https://www.txtconnect.co/v2/app/api/send/sms.json',

@@ -11,13 +11,14 @@ import {
 import DashboardLayout from './layouts/Dashboard';
 import { compose } from 'react-komposer';
 import {
+  AccountsPage,
   AppsPage,
   LoginPage,
   OverviewPage,
   ReportsPage,
   SendMessagePage,
-  UsersPage,
-  AccountsPage
+  SettingsPage,
+  UsersPage
 } from './pages';
 import './styles/index.css';
 
@@ -98,6 +99,7 @@ const App = props => (
       <DashboardRoute path="/overview" component={OverviewPage} {...props} />
       <DashboardRoute path="/reports" component={ReportsPage} {...props} />
       <DashboardRoute path="/send-message" component={SendMessagePage} {...props} />
+      <DashboardRoute path="/settings" component={SettingsPage} {...props} />
       <DashboardRoute path="/users" component={UsersPage} {...props} />
     </Switch>
   </Router>

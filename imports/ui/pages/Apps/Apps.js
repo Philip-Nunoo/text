@@ -37,7 +37,7 @@ export class Apps extends Component {
     const { showNewAppModal } = this.state;
 
     return (
-      <div>
+      <>
         <Breadcrumb
           title="Apps"
           toolbar={
@@ -81,7 +81,7 @@ export class Apps extends Component {
           toggle={this.toggleNewAppModal}
           onSubmit={this.submitNewAppForm}
         />
-      </div>
+      </>
     );
   }
 }
