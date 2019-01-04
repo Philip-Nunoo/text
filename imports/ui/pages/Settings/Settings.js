@@ -24,7 +24,10 @@ const SettingsSchema = new SimpleSchema({
 });
 
 export class Setting extends Component {
-  state = {}
+    static defaultProps = {
+        isAdmin: false,
+        setting: {}
+    }
 
   submitNewSettingForm = doc => {    
     Meteor.call('Setting.update', doc, error => {
@@ -38,8 +41,8 @@ export class Setting extends Component {
   
   render() {
     const {
-        setting = {}, 
-        isAdmin = false
+        setting,
+        isAdmin
     } = this.props;
 
     return (

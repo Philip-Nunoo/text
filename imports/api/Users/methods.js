@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import UserGroups from './UserGroups';
+import Users from './index';
 
 Meteor.methods({
     'Users.addNewUser'({
@@ -32,8 +33,20 @@ Meteor.methods({
         const userId = Accounts.createUser(options);
         Roles.addUsersToRoles(userId, UserGroups[group].roles, group);
         
-        return { userId };
+        return { userId };        
+    },
+    'Users.remove'(userId) {
+        if(!Roles.userIsInRole(
+            this.userId, 
+            ['super-admin', ...UserGroups.admin.roles],
+            UserGroups.admin.name
+        )) {
+            throw new Meteor.Error('unauthorized');
+        }
+
+        Users.remove(userId);
         
+        return { id: userId };
     }
 })
 

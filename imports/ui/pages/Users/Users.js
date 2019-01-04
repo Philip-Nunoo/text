@@ -11,8 +11,12 @@ import {
 } from './../../components';
 import NewUserModal from './NewUserModal';
 
-
 export class UsersPage extends Component {
+  static propTypes = {
+    isAdmin: false,
+    users: []
+  }
+
   state = {
     showNewUserModal: false
   };
@@ -33,8 +37,21 @@ export class UsersPage extends Component {
     });
   }  
 
+  removeUser = userId => {
+    Meteor.call('Users.remove', userId, (error) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('user removed');
+      }
+    });
+  }
+
   render() {
-    const { users = [] } = this.props;
+    const {
+      isAdmin,
+      users
+    } = this.props;
     const { showNewUserModal } = this.state;
 
     return (
@@ -73,12 +90,14 @@ export class UsersPage extends Component {
                     <td>{user.createdAt && user.createdAt.toString()}</td>
                     <td>{user.lastLogin}</td>
                     <td>
+                      {isAdmin && 
                       <Button
-                        color="primary"
+                        color="danger"
                         size="sm"
+                        onClick={() => this.removeUser(user._id)}
                       >
-                        View
-                      </Button>
+                        Remove
+                      </Button>}
                     </td>
                   </tr>
                 ))}

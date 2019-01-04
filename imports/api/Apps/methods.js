@@ -14,5 +14,16 @@ Meteor.methods({
 
         const id = Apps.insert(appDoc);
         return { id };
+    },
+    'App.remove'(appId) {
+        if (!Roles.userIsInRole(
+            this.userId, 
+            ['super-admin', 'create-app']
+        )) {
+            throw new Meteor.Error('unauthorized');
+        }
+
+        Apps.remove(appId);
+        return { appId };
     }
 })

@@ -12,6 +12,11 @@ import {
 import NewAppModal from './NewAppModal';
 
 export class Apps extends Component {
+  static defaultProps = {
+    isAdmin: false,
+    apps: []
+  }
+
   state = {
     showNewAppModal: false
   }
@@ -19,6 +24,16 @@ export class Apps extends Component {
   toggleNewAppModal = () => {
     this.setState({
       showNewAppModal: !this.state.showNewAppModal
+    });
+  }
+
+  remove = (appId) => {
+    Meteor.call('App.remove', appId, error => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('app removed');
+      }
     });
   }
 
@@ -33,7 +48,10 @@ export class Apps extends Component {
   }
   
   render() {
-    const { apps = [] } = this.props;
+    const { 
+      apps,
+      isAdmin
+    } = this.props;
     const { showNewAppModal } = this.state;
 
     return (
@@ -69,7 +87,17 @@ export class Apps extends Component {
                     <td>{app.name}</td>
                     <td>{app.apiKey ? app.apiKey.key : 'No api key set'}</td>
                     <td>{app.assignedUser}</td>
-                    <td><Button color="primary">View</Button></td>
+                    <td>
+                      {/* <Button color="primary">View</Button> */}
+                      {isAdmin && 
+                      <Button 
+                        color="danger" 
+                        size="sm"
+                        onClick={() => this.remove(app._id)}
+                      >
+                        Remove
+                      </Button>}
+                    </td>
                   </tr>
                 ))}
               </tbody>
