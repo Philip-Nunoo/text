@@ -55,7 +55,7 @@ class Dashboard extends Component {
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="ml-auto navbar-nav">
                             <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
+                                <DropdownToggle nav>
                                     Account
                                 </DropdownToggle>
                                 <DropdownMenu right>
