@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'seed-fonts';
-  src:  url('fonts/seed-fonts.eot?5vraeq');
-  src:  url('fonts/seed-fonts.eot?5vraeq#iefix') format('embedded-opentype'),
-    url('fonts/seed-fonts.ttf?5vraeq') format('truetype'),
-    url('fonts/seed-fonts.woff?5vraeq') format('woff'),
-    url('fonts/seed-fonts.svg?5vraeq#seed-fonts') format('svg');
+  src:  url('fonts/seed-fonts.eot?1awkgv');
+  src:  url('fonts/seed-fonts.eot?1awkgv#iefix') format('embedded-opentype'),
+    url('fonts/seed-fonts.ttf?1awkgv') format('truetype'),
+    url('fonts/seed-fonts.woff?1awkgv') format('woff'),
+    url('fonts/seed-fonts.svg?1awkgv#seed-fonts') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -44,6 +44,9 @@ i {
 }
 .icon-meter:before {
   content: "\e9a6";
+}
+.icon-bin:before {
+  content: "\e9ac";
 }
 .icon-shield:before {
   content: "\e9b4";

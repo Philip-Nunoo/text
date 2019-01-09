@@ -1,6 +1,7 @@
 //@flow
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import Users from '/imports/api/Users';
 import {
@@ -12,9 +13,10 @@ import {
 import NewUserModal from './NewUserModal';
 
 export class UsersPage extends Component {
-  static propTypes = {
+  static defaultProps = {
     isAdmin: false,
-    users: []
+    users: [],
+    loading: true
   }
 
   state = {
@@ -50,9 +52,14 @@ export class UsersPage extends Component {
   render() {
     const {
       isAdmin,
+      loading,
       users
     } = this.props;
     const { showNewUserModal } = this.state;
+
+    const renderDate = date => (
+      moment(date).format('DD MMM YYYY hh:mm:ss')
+    );
 
     return (
       <div>
@@ -70,6 +77,8 @@ export class UsersPage extends Component {
         />
         <Portlet>
           <Portlet.Body>
+            {loading ?
+            <div>Loading...</div> :
             <Table>
               <thead>
                 <tr>
@@ -86,9 +95,9 @@ export class UsersPage extends Component {
                   <tr key={user._id}>
                     <td/>
                     <td>{`${profile.firstName} ${profile.lastName}`}</td>
-                    <td>{user.email}</td>
-                    <td>{user.createdAt && user.createdAt.toString()}</td>
-                    <td>{user.lastLogin}</td>
+                    <td>{user.emails[0].address}</td>
+                    <td>{user.createdAt && renderDate(user.createdAt)}</td>
+                    <td>{user.status.lastLogin && renderDate(user.status.lastLogin.date)}</td>
                     <td>
                       {isAdmin && 
                       <Button
@@ -96,13 +105,14 @@ export class UsersPage extends Component {
                         size="sm"
                         onClick={() => this.removeUser(user._id)}
                       >
-                        Remove
+                        <i className="icon-bin"/>
                       </Button>}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
+            }
           </Portlet.Body>
         </Portlet>
         <NewUserModal
@@ -116,7 +126,11 @@ export class UsersPage extends Component {
 }
 
 export default withTracker(() => {
+  const handle = Meteor.subscribe("users.all");
+
   return {
+    user: Meteor.user(),
+    loading: !handle.ready(),
     users: Users.find().fetch(),
   };
 })(UsersPage);

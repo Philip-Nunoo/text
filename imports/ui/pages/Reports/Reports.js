@@ -11,7 +11,7 @@ import {
   Table
 } from './../../components';
 
-const Reports = ({ reports = [] }) => {
+const Reports = ({ reports = [], loading = true }) => {
   const renderStatus = status => {
     let state = <Label>Not found</Label>;
     switch (status) {
@@ -43,6 +43,8 @@ const Reports = ({ reports = [] }) => {
       <Breadcrumb title="Reports" />
       <Portlet>
         <Portlet.Body>
+          {loading ?
+          <div>Loading...</div> :
           <Table>
             <thead>
               <tr>
@@ -63,12 +65,13 @@ const Reports = ({ reports = [] }) => {
                   <td>{report.message}</td>
                   <td>{renderStatus(report.status)}</td>
                   <td>
-                    <Button color="primary" size="sm">Delete</Button>
+                    <Button color="danger" size="sm"><i className="icon-bin"/></Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+          }
         </Portlet.Body>
       </Portlet>
     </div>
@@ -76,7 +79,10 @@ const Reports = ({ reports = [] }) => {
 }
 
 export default ReportsContainer = withTracker(() => {
+  const handle = Meteor.subscribe("smsRequests.all");
+
   return {
+    loading: !handle.ready(),
     reports: SmsRequests.find().fetch(),
   };
 })(Reports);

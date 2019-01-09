@@ -14,7 +14,8 @@ import NewAppModal from './NewAppModal';
 export class Apps extends Component {
   static defaultProps = {
     isAdmin: false,
-    apps: []
+    apps: [],
+    loading: true
   }
 
   state = {
@@ -50,7 +51,8 @@ export class Apps extends Component {
   render() {
     const { 
       apps,
-      isAdmin
+      isAdmin,
+      loading
     } = this.props;
     const { showNewAppModal } = this.state;
 
@@ -70,6 +72,8 @@ export class Apps extends Component {
         />
         <Portlet>
           <Portlet.Body>
+            { loading ?
+            <div>Loading...</div>:
             <Table>
               <thead>
                 <tr>
@@ -95,13 +99,14 @@ export class Apps extends Component {
                         size="sm"
                         onClick={() => this.remove(app._id)}
                       >
-                        Remove
+                        <i className="icon-bin"/>
                       </Button>}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
+            }
           </Portlet.Body>
         </Portlet>
         <NewAppModal
@@ -114,6 +119,11 @@ export class Apps extends Component {
   }
 }
 
-export default withTracker(() => ({
-  apps: ClientApps.find().fetch()
-}))(Apps);
+export default withTracker(() => {
+  const handle = Meteor.subscribe("apps.all");
+
+  return ({
+    loading: !handle.ready(),
+    apps: ClientApps.find().fetch()
+  });
+})(Apps);
