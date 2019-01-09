@@ -10,7 +10,6 @@ import {
   Table
 } from './../../components';import NewUserModal from './NewUserModal';
 import TableRow from './TableRow';
-// Popover
 export class UsersPage extends Component {
   static defaultProps = {
     isAdmin: false,
@@ -87,7 +86,12 @@ export class UsersPage extends Component {
               </thead>
               <tbody>
                 {users.map(user => (
-                  <TableRow key={user.id} user={user} removeUser={this.removeUser} loggedInUser={this.props.user}/>
+                  <TableRow 
+                    key={user._id} 
+                    user={user} 
+                    removeUser={this.removeUser} 
+                    loggedInUser={this.props.user}
+                  />
                 ))}
               </tbody>
             </Table>

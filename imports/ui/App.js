@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { 
@@ -25,9 +25,6 @@ import {
 } from './routes';
 import './styles/index.css';
 
-/*
-   App
- */
 const App = props => (
   <Router>
     <Switch>
@@ -42,6 +39,7 @@ const App = props => (
       <ProtectedRoute path="/send-message" component={SendMessagePage} {...props} />
       <ProtectedRoute path="/settings" component={SettingsPage} {...props} />
       <ProtectedRoute path="/users" component={UsersPage} {...props} />
+      <Route path="*" component={() => <div>Not found</div>} />
     </Switch>
   </Router>
 );
