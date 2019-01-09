@@ -8,7 +8,6 @@ import {
   Redirect, 
   Switch
 } from 'react-router-dom';
-import DashboardLayout from './layouts/Dashboard';
 import { compose } from 'react-komposer';
 import {
   AccountsPage,
@@ -20,87 +19,29 @@ import {
   SettingsPage,
   UsersPage
 } from './pages';
+import {
+  AuthRoute,
+  ProtectedRoute
+} from './routes';
 import './styles/index.css';
-
-/*
-  Layouts, inline define here for demo purpose
-  you may want to define in another file instead
- */
-
-const LoginLayout = ({children, ...rest}) => {
-  return (
-    <div className="page page-login">
-      <div className="main">{children}</div>
-    </div>
-  )
-}
-
-/*
-  Route wrapper
- */
-const DashboardRoute = ({ 
-  loggingIn, 
-  authenticated, 
-  component: Component, 
-  ...rest
-}) => {
-  return (
-    <Route 
-      {...rest} 
-      render={matchProps => {
-        if (loggingIn) return <div>Loading...</div>;
-        return authenticated ? 
-          <DashboardLayout>
-              <Component {...matchProps} />
-          </DashboardLayout> :
-          <Redirect to='/login' />
-        }
-      }
-    />
-  )
-};
-
-const LoginLayoutRoute = ({
-  loggingIn,
-  authenticated,
-  component: Component,
-  ...rest
-}) => {
-  return (
-    <Route 
-      {...rest} 
-      render={matchProps => {
-        if (loggingIn) return <div>Loading...</div>;
-        return !authenticated ?
-          <LoginLayout>
-              <Component {...matchProps} />
-          </LoginLayout> :
-          <Redirect to="/overview" />
-        }
-      }
-    />
-  )
-};
 
 /*
    App
  */
-
-
 const App = props => (
   <Router>
     <Switch>
       <Route exact path="/">
           <Redirect to="/login" />
       </Route>
-      <LoginLayoutRoute path="/login" component={LoginPage} {...props} />
-      <DashboardRoute path="/accounts" component={AccountsPage} {...props} />
-      <DashboardRoute path="/apps" component={AppsPage} {...props} />
-      <DashboardRoute path="/overview" component={OverviewPage} {...props} />
-      <DashboardRoute path="/reports" component={ReportsPage} {...props} />
-      <DashboardRoute path="/send-message" component={SendMessagePage} {...props} />
-      <DashboardRoute path="/settings" component={SettingsPage} {...props} />
-      <DashboardRoute path="/users" component={UsersPage} {...props} />
+      <AuthRoute path="/login" component={LoginPage} {...props} />
+      <ProtectedRoute path="/accounts" component={AccountsPage} {...props} />
+      <ProtectedRoute path="/apps" component={AppsPage} {...props} />
+      <ProtectedRoute path="/overview" component={OverviewPage} {...props} />
+      <ProtectedRoute path="/reports" component={ReportsPage} {...props} />
+      <ProtectedRoute path="/send-message" component={SendMessagePage} {...props} />
+      <ProtectedRoute path="/settings" component={SettingsPage} {...props} />
+      <ProtectedRoute path="/users" component={UsersPage} {...props} />
     </Switch>
   </Router>
 );
