@@ -1,42 +1,19 @@
 // @flow
 import React from 'react';
-import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import SmsRequests from '/imports/api/SmsRequests';
 import {
   Breadcrumb,
-  Button,
-  Label,
   Portlet,
   Table
 } from './../../components';
+import TableRow from './TableRow';
 
-const Reports = ({ reports = [], loading = true }) => {
-  const renderStatus = status => {
-    let state = <Label>Not found</Label>;
-    switch (status) {
-      case 'new':
-      case 'pending': {
-        state = <Label color="info">Pending</Label>;
-        break;
-      }
-      case 'scheduled': {
-        state = <Label color="secondary">Scheduled</Label>;
-        break;
-      }
-      case 'sent': {
-        state = <Label color="success">Sent</Label>;
-        break;
-      }
-      default:
-        break;
-    }
-    return state;
+const Reports = ({ reports = [], loading = true, ...props }) => {  
+
+  const remove = (reportId) => {
+
   }
-
-  const renderDate = date => (
-    moment(date).format('DD MMM YYYY hh:mm:ss')
-  );
   
   return (
     <div>
@@ -57,18 +34,14 @@ const Reports = ({ reports = [], loading = true }) => {
               </tr>
             </thead>
             <tbody>
-              {reports.map((report) => (
-                <tr key={report._id}>
-                  <td>{renderDate(report.createdAt)}</td>
-                  <td>{report.origin}</td>
-                  <td>{report.to}</td>
-                  <td>{report.message}</td>
-                  <td>{renderStatus(report.status)}</td>
-                  <td>
-                    <Button color="danger" size="sm"><i className="icon-bin"/></Button>
-                  </td>
-                </tr>
-              ))}
+              {reports.map(report => 
+                <TableRow 
+                  key={report._id} 
+                  report={report} 
+                  removeReport={remove}
+                  {...props}
+                />
+              )}
             </tbody>
           </Table>
           }

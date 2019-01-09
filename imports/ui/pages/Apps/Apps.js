@@ -10,7 +10,7 @@ import {
   Table
 } from './../../components';
 import NewAppModal from './NewAppModal';
-
+import TableRow from './TableRow';
 export class Apps extends Component {
   static defaultProps = {
     isAdmin: false,
@@ -51,7 +51,6 @@ export class Apps extends Component {
   render() {
     const { 
       apps,
-      isAdmin,
       loading
     } = this.props;
     const { showNewAppModal } = this.state;
@@ -85,25 +84,14 @@ export class Apps extends Component {
                 </tr>
               </thead>
               <tbody>
-                {apps.map((app) => (
-                  <tr key={app._id}>
-                    <td/>
-                    <td>{app.name}</td>
-                    <td>{app.apiKey ? app.apiKey.key : 'No api key set'}</td>
-                    <td>{app.assignedUser}</td>
-                    <td>
-                      {/* <Button color="primary">View</Button> */}
-                      {isAdmin && 
-                      <Button 
-                        color="danger" 
-                        size="sm"
-                        onClick={() => this.remove(app._id)}
-                      >
-                        <i className="icon-bin"/>
-                      </Button>}
-                    </td>
-                  </tr>
-                ))}
+                {apps.map(app =>
+                  <TableRow
+                    key={app._id} 
+                    app={app} 
+                    removeApp={this.remove} 
+                    {...this.props}
+                  />
+                )}
               </tbody>
             </Table>
             }

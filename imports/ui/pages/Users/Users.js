@@ -1,7 +1,6 @@
 //@flow
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import Users from '/imports/api/Users';
 import {
@@ -9,9 +8,9 @@ import {
   Button,
   Portlet,
   Table
-} from './../../components';
-import NewUserModal from './NewUserModal';
-
+} from './../../components';import NewUserModal from './NewUserModal';
+import TableRow from './TableRow';
+// Popover
 export class UsersPage extends Component {
   static defaultProps = {
     isAdmin: false,
@@ -57,10 +56,6 @@ export class UsersPage extends Component {
     } = this.props;
     const { showNewUserModal } = this.state;
 
-    const renderDate = date => (
-      moment(date).format('DD MMM YYYY hh:mm:ss')
-    );
-
     return (
       <div>
         <Breadcrumb
@@ -91,24 +86,8 @@ export class UsersPage extends Component {
                 </tr>
               </thead>
               <tbody>
-                {users.map(({ profile = {}, ...user}) => (
-                  <tr key={user._id}>
-                    <td/>
-                    <td>{`${profile.firstName} ${profile.lastName}`}</td>
-                    <td>{user.emails[0].address}</td>
-                    <td>{user.createdAt && renderDate(user.createdAt)}</td>
-                    <td>{user.status.lastLogin && renderDate(user.status.lastLogin.date)}</td>
-                    <td>
-                      {isAdmin && 
-                      <Button
-                        color="danger"
-                        size="sm"
-                        onClick={() => this.removeUser(user._id)}
-                      >
-                        <i className="icon-bin"/>
-                      </Button>}
-                    </td>
-                  </tr>
+                {users.map(user => (
+                  <TableRow key={user.id} user={user} removeUser={this.removeUser} loggedInUser={this.props.user}/>
                 ))}
               </tbody>
             </Table>

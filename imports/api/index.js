@@ -5,3 +5,4 @@ import './Users/methods';
 import './Users/publications';
 import './SmsRequests/publications';
 import './Apps/publications';
+import './Settings/publications';

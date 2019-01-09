@@ -24,10 +24,11 @@ const SettingsSchema = new SimpleSchema({
 });
 
 export class Setting extends Component {
-    static defaultProps = {
-        isAdmin: false,
-        setting: {}
-    }
+  static defaultProps = {
+    isAdmin: false,
+    setting: {},
+    loading: true
+  }
 
   submitNewSettingForm = doc => {    
     Meteor.call('Setting.update', doc, error => {
@@ -42,7 +43,8 @@ export class Setting extends Component {
   render() {
     const {
         setting,
-        isAdmin
+        isAdmin,
+        loading
     } = this.props;
 
     return (
@@ -52,6 +54,8 @@ export class Setting extends Component {
         />
         <Portlet>
           <Portlet.Body>
+            {loading ?
+            <div>Loading...</div> :
             <AutoForm
                 schema={SettingsSchema}
                 onSubmit={this.submitNewSettingForm}
@@ -68,6 +72,7 @@ export class Setting extends Component {
                 />
                 <SubmitField disabled={!isAdmin}/>
             </AutoForm>
+            }
           </Portlet.Body>
         </Portlet>
       </>
@@ -75,6 +80,11 @@ export class Setting extends Component {
   }
 }
 
-export default withTracker(() => ({
-  setting: Settings.findOne({ active: true })
-}))(Setting);
+export default withTracker(() => {
+  const handle = Meteor.subscribe("settings.all");
+  
+  return ({
+    loading: !handle.ready(),
+    setting: Settings.findOne({ active: true })
+  }); 
+})(Setting);
