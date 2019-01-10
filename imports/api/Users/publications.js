@@ -4,12 +4,28 @@ import Users from './index';
 import UserGroups from './UserGroups';
 import Groups from './../Groups';
 
+publishComposite('userData', {
+    find() {
+        const fields = {
+            emails: 1,
+            status: 1,
+            createdAt: 1,
+            groupId: 1,
+            profile: 1
+        };
+
+        return Users.find({ _id: this.userId }, { fields });
+    }
+});
+
 publishComposite('users.all', {
     find() {
         const fields = {
             emails: 1,
             status: 1,
-            createdAt: 1
+            createdAt: 1,
+            groupId: 1,
+            profile: 1
         };
         
         if (!this.userId) {

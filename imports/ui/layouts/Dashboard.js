@@ -1,6 +1,7 @@
 //@flow
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
+import { Roles } from 'meteor/alanning:roles';
 import {
     Nav,
     NavItem,
@@ -10,7 +11,6 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
-import { Roles } from 'meteor/alanning:roles';
 import { NavLink as Link } from 'react-router-dom';
 import Config, {
     SidebarMenus
@@ -32,7 +32,16 @@ class Dashboard extends Component {
                       <h6 className="mb-0">{Config.appName}</h6>
                   </div>
                   <Nav className="list-unstyled components" style={{ display: 'block' }}>
-                      {menus.map((menu, idx) => 
+                      {menus.filter(({ sidebar = false, roles = [] }) => {
+                          const hasRole = Roles.userIsInRole(
+                            Meteor.userId(),
+                            ['super-admin', ...roles],
+                            rest.user.groupId
+                            );
+                          return sidebar && hasRole;
+                      })
+                      .sort((a, b) => a.sidebar.position - b.sidebar.position)
+                      .map((menu, idx) => 
                           <NavItem key={idx}>
                               <NavLink tag={Link} to={menu.url}>
                                   <i className={`icon-${menu.icon}`} />

@@ -27,8 +27,8 @@ Meteor.methods({
             password,
             profile: {
                 firstName: fullName
-            }
-
+            },
+            groupId: group
         };
 
         const userId = Accounts.createUser(options);

@@ -17,7 +17,7 @@ export default ({
             if (loggingIn) return <div>Loading...</div>;
             return !authenticated ?
             <AuthLayout>
-                <Component {...matchProps} />
+                <Component {...matchProps} {...rest}/>
             </AuthLayout> :
             <Redirect to="/overview" />
         }}

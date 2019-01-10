@@ -29,6 +29,7 @@ import {
   client,
   user
 } from './../api/Users/UserGroups';
+import { SidebarMenus } from './config';
 import './styles/index.css';
 
 const App = props => (
@@ -42,9 +43,23 @@ const App = props => (
         component={LoginPage}
         {...props}
       />
-      <ProtectedRoute
+      {SidebarMenus.map(({ 
+        url, 
+        ...menu 
+      }) => {             
+        return (
+          <ProtectedRoute
+            key={url}
+            path={url}
+            {...menu}
+            {...props}
+          />
+        );
+      })}
+      {/* <ProtectedRoute
         path="/accounts"
         component={AccountsPage}
+        roles={user.roles}
         {...props}
       />
       <ProtectedRoute
@@ -56,6 +71,7 @@ const App = props => (
       <ProtectedRoute
         path="/overview"
         component={OverviewPage}
+        roles={user.roles}
         {...props}
       />
       <ProtectedRoute
@@ -73,7 +89,7 @@ const App = props => (
       <ProtectedRoute
         path="/settings"
         component={SettingsPage}
-        role={admin.roles}
+        roles={admin.roles}
         {...props}
       />
       <ProtectedRoute
@@ -87,7 +103,7 @@ const App = props => (
         component={GroupsPage}
         roles={admin.roles}
         {...props}
-      />
+      /> */}
       <Route 
         path="/not-found"
         component={() => <div>Not found</div>} 
@@ -118,9 +134,12 @@ function getTrackerLoader(reactiveMapper) {
 
 const composer = (props, onData) => {
   const loggingIn = Meteor.loggingIn();
+  Meteor.subscribe('userData');
+
   onData(null, {
     loggingIn,
     authenticated: !loggingIn && !!Meteor.userId(),
+    user: Meteor.user(),
   });
 };
 
