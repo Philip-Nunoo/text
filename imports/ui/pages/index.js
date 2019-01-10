@@ -62,3 +62,8 @@ export const UsersPage = Loadable({
     ...loadingOptions,
     loader: () => import('./Users')
 });
+
+export const GroupsPage = Loadable({
+    ...loadingOptions,
+    loader: () => import('./Groups')
+});

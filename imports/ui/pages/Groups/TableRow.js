@@ -15,7 +15,7 @@ const renderDate = date => (
 
 class TableRow extends Component {
     static defaultProps = {
-        user: {}
+        group: {}
     }
 
     state = {
@@ -27,7 +27,7 @@ class TableRow extends Component {
     }
 
     deleteRow = () => {
-        this.props.removeUser && this.props.removeUser(this.props.user._id);
+        this.props.removeGroup && this.props.removeGroup(this.props.group._id);
         this.togglePopover(false);
     }
 
@@ -35,23 +35,22 @@ class TableRow extends Component {
         const {
             loggedInUser,
             isAdmin, 
-            user: { profile = {}, ...user }
+            group
         } = this.props;
 
         return (
             <tr>
                 <td/>
-                <td>{`${profile.firstName} ${profile.lastName}`}</td>
-                <td>{user.emails[0].address}</td>
-                <td>{user.createdAt && renderDate(user.createdAt)}</td>
-                <td>{!user.status ? '-' : user.status.lastLogin && renderDate(user.status.lastLogin.date)}</td>
+                <td>{group.name}</td>
+                <td>{group.createdAt && renderDate(group.createdAt)}</td>
+                <td>{group.active ? 'true' : 'false'}</td>
                 <td>
-                    {isAdmin && loggedInUser._id != user._id &&
+                    {isAdmin &&
                     <>
                         <Button
                             color="danger"
                             size="sm"
-                            id={`${user._id}__popover`}
+                            id={`group__${group._id}__popover`}
                             onClick={this.togglePopover}
                         >
                             <i className="icon-bin"/>
@@ -59,7 +58,7 @@ class TableRow extends Component {
                         <Popover 
                             placement="bottom" 
                             isOpen={this.state.popoverOpen} 
-                            target={`${user._id}__popover`} 
+                            target={`group__${group._id}__popover`} 
                             toggle={this.toggle}
                         >
                             <PopoverHeader>

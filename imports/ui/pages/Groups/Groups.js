@@ -10,9 +10,10 @@ import {
   Portlet,
   Table
 } from './../../components';
-import NewUserModal from './NewUserModal';
+import NewGroupModal from './NewGroupModal';
 import TableRow from './TableRow';
-export class UsersPage extends Component {
+
+export class GroupsPage extends Component {
   static defaultProps = {
     isAdmin: false,
     users: [],
@@ -21,54 +22,53 @@ export class UsersPage extends Component {
   }
 
   state = {
-    showNewUserModal: false
+    showNewGroupModal: false
   };
 
-  toggleNewUserModal = () => {
+  toggleNewGroupModal = () => {
     this.setState({
-      showNewUserModal: !this.state.showNewUserModal
+      showNewGroupModal: !this.state.showNewGroupModal
     });
   }
 
-  submitNewUserForm = doc => {
-    Meteor.call('Users.addNewUser', doc, (error) => {
+  submitNewGroupForm = doc => {
+    Meteor.call('Group.create', doc, (error) => {
       if (error) {
         console.error(error);
       } else {
-        this.toggleNewUserModal();
+        this.toggleNewGroupModal();
       }
     });
   }  
 
-  removeUser = userId => {
-    Meteor.call('Users.remove', userId, (error) => {
+  removeGroup = groupId => {
+    Meteor.call('Group.remove', groupId, (error) => {
       if (error) {
         console.error(error);
       } else {
-        console.log('user removed');
+        console.log('group removed');
       }
     });
   }
 
   render() {
     const {
-      isAdmin,
       loading,
-      users
+      groups
     } = this.props;
-    const { showNewUserModal } = this.state;
+    const { showNewGroupModal } = this.state;
 
     return (
-      <div>
+      <>
         <Breadcrumb
-          title="Users"
+          title="Groups"
           toolbar={
             <Button
               color="primary"
               size="sm"
-              onClick={this.toggleNewUserModal}
+              onClick={this.toggleNewGroupModal}
             >
-              Add User
+              Add Group
             </Button>
           }
         />
@@ -80,20 +80,19 @@ export class UsersPage extends Component {
               <thead>
                 <tr>
                   <th/>
-                  <th>Full name</th>
-                  <th>Email</th>
+                  <th>Name</th>
                   <th>Created at</th>
-                  <th>Last login</th>
+                  <th>active</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map(user => (
+                {groups.map(group => (
                   <TableRow 
                     {...this.props}
-                    key={user._id} 
-                    user={user} 
-                    removeUser={this.removeUser} 
+                    key={group._id} 
+                    group={group} 
+                    removeGroup={this.removeGroup} 
                     loggedInUser={this.props.user}
                   />
                 ))}
@@ -102,19 +101,19 @@ export class UsersPage extends Component {
             }
           </Portlet.Body>
         </Portlet>
-        <NewUserModal
-          isOpen={showNewUserModal} 
-          toggle={this.toggleNewUserModal}
-          onSubmit={this.submitNewUserForm}
+        <NewGroupModal
+          isOpen={showNewGroupModal} 
+          toggle={this.toggleNewGroupModal}
+          onSubmit={this.submitNewGroupForm}
           groups={this.props.groups}
         />
-      </div>
+      </>
     )
   }
 }
 
 export default withTracker(() => {
-  const handle = Meteor.subscribe("users.all");
+  const handle = Meteor.subscribe("groups.all");
 
   return {
     user: Meteor.user(),
@@ -122,4 +121,4 @@ export default withTracker(() => {
     users: Users.find().fetch(),
     groups: Groups.find().fetch()
   };
-})(UsersPage);
+})(GroupsPage);

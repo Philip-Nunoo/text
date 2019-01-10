@@ -27,6 +27,11 @@ export const SidebarMenus = [
         name: "Users",
         url: "users",
         icon: "users"
+    },
+    {
+        name: "Groups",
+        url: "groups",
+        icon: "users"
     }
 ];
  

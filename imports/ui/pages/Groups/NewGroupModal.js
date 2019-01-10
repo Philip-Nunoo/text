@@ -8,41 +8,30 @@ import {
 } from 'reactstrap';
 import {
     AutoForm,
-    AutoField,
-    AutoFields,
-    SelectField
+    AutoFields
 } from 'uniforms-bootstrap4';
-import NewUserSchema from './UserSchema';
+import GroupSchema from './GroupSchema';
 
-const NewUserModal = ({
+const NewGroupModal = ({
     isOpen,
     onSubmit,
-    toggle,
-    groups
+    toggle
 }) => {
     let formRef;
-    const groupOpts = groups.filter(({ active = false }) => active)
-    .map(({ _id: value, name: label }) => ({ value, label }));
     
     return (
         <Modal isOpen={isOpen} toggle={toggle}>
             <ModalHeader toggle={toggle}>
-                Add User
+                Add Group
             </ModalHeader>
             <ModalBody>
                 <AutoForm
                     ref={ref => formRef = ref}
-                    schema={NewUserSchema}
+                    schema={GroupSchema}
                     onSubmit={onSubmit}
                     autoComplete="off"
                 >
-                    <AutoFields omitFields={['group', 'type']} />
-                    <hr />
-                    <AutoField name="type" />
-                    <SelectField 
-                        name="group"
-                        options={groupOpts}
-                    />
+                    <AutoFields />
                 </AutoForm>
             </ModalBody>
             <ModalFooter>
@@ -65,4 +54,4 @@ const NewUserModal = ({
     )
 }
 
-export default NewUserModal
+export default NewGroupModal

@@ -12,6 +12,7 @@ import { compose } from 'react-komposer';
 import {
   AccountsPage,
   AppsPage,
+  GroupsPage,
   LoginPage,
   OverviewPage,
   ReportsPage,
@@ -23,6 +24,11 @@ import {
   AuthRoute,
   ProtectedRoute
 } from './routes';
+import {
+  admin,
+  client,
+  user
+} from './../api/Users/UserGroups';
 import './styles/index.css';
 
 const App = props => (
@@ -31,15 +37,64 @@ const App = props => (
       <Route exact path="/">
           <Redirect to="/login" />
       </Route>
-      <AuthRoute path="/login" component={LoginPage} {...props} />
-      <ProtectedRoute path="/accounts" component={AccountsPage} {...props} />
-      <ProtectedRoute path="/apps" component={AppsPage} {...props} />
-      <ProtectedRoute path="/overview" component={OverviewPage} {...props} />
-      <ProtectedRoute path="/reports" component={ReportsPage} {...props} />
-      <ProtectedRoute path="/send-message" component={SendMessagePage} {...props} />
-      <ProtectedRoute path="/settings" component={SettingsPage} {...props} />
-      <ProtectedRoute path="/users" component={UsersPage} {...props} />
-      <Route path="*" component={() => <div>Not found</div>} />
+      <AuthRoute
+        path="/login"
+        component={LoginPage}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/accounts"
+        component={AccountsPage}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/apps"
+        component={AppsPage}
+        roles={user.roles}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/overview"
+        component={OverviewPage}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/reports"
+        component={ReportsPage}
+        roles={user.roles}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/send-message"
+        component={SendMessagePage}
+        roles={admin.roles}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/settings"
+        component={SettingsPage}
+        role={admin.roles}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/users"
+        component={UsersPage}
+        roles={client.roles}
+        {...props}
+      />
+      <ProtectedRoute
+        path="/groups"
+        component={GroupsPage}
+        roles={admin.roles}
+        {...props}
+      />
+      <Route 
+        path="/not-found"
+        component={() => <div>Not found</div>} 
+      />
+      <Route path="*">
+        <Redirect to="/not-found" />
+      </Route>
     </Switch>
   </Router>
 );

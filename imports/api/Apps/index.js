@@ -24,8 +24,4 @@ Apps.before.update(function (userId, doc, fieldNames, modifier, options) {
     modifier.$set.modifiedAt = Date.now();
 });
 
-Apps.after.insert(function (userId, doc) {
-    console.log('send sms message to', doc.to);
-});
-
 export default Apps;

@@ -1,28 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import Apps from './index';
+import Groups from './index';
 
 Meteor.methods({
-    'App.create'(appDoc) {
+    'Group.create'(groupDoc) {
         if (!Roles.userIsInRole(
             this.userId, 
-            ['super-admin', 'create-app']
+            ['super-admin', 'create-group']
         )) {
             throw new Meteor.Error('unauthorized');
         }
 
-        const id = Apps.insert(appDoc);
+        const id = Groups.insert(groupDoc);
         return { id };
     },
-    'App.remove'(appId) {
+    'Group.remove'(groupId) {
         if (!Roles.userIsInRole(
             this.userId, 
-            ['super-admin', 'create-app']
+            ['super-admin', 'create-group']
         )) {
             throw new Meteor.Error('unauthorized');
         }
 
-        Apps.remove(appId);
-        return { appId };
+        Groups.remove(groupId);
+        return { groupId };
     }
 })

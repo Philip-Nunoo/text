@@ -1,0 +1,5 @@
+{
+    "name": "groups",
+    "private": true,
+    "main": "./Groups.js"
+}

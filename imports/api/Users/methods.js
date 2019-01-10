@@ -10,8 +10,8 @@ Meteor.methods({
         email, 
         password, 
         fullName, 
-        group,
-        ...userDoc
+        type,
+        group
     }) {
         if(!Roles.userIsInRole(
             this.userId, 
@@ -28,10 +28,11 @@ Meteor.methods({
             profile: {
                 firstName: fullName
             }
+
         };
 
         const userId = Accounts.createUser(options);
-        Roles.addUsersToRoles(userId, UserGroups[group].roles, group);
+        Roles.addUsersToRoles(userId, UserGroups[type].roles, group);
         
         return { userId };        
     },

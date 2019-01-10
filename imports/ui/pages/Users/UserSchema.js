@@ -29,7 +29,7 @@ export default new SimpleSchema({
             type: 'password'
         }
     },
-    group: {
+    type: {
         type: String,
         allowedValues: ['user', 'client', 'admin'],
         uniforms: {
@@ -39,5 +39,8 @@ export default new SimpleSchema({
                 { label: 'Admin', value: 'admin' }
             ]
         }
+    },
+    group: {
+        type: String
     }
 });
