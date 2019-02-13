@@ -1,1 +1,33 @@
 @import '/imports/ui/styles/index.css';
+
+.table {
+}
+
+.table .btn-sm {
+    padding: 0rem 0.3rem;
+}
+
+/* cards */
+.card-stats .card-body .numbers .card-category {
+    color: #9a9a9a;
+    font-size: 16px;
+    line-height: 1.4em;
+}
+
+.card-stats .card-body .numbers {
+    text-align: right;
+    font-size: 2em;
+}
+
+.card-stats .card-body .numbers p {
+    margin-bottom: 0;
+}
+
+.card-stats .icon-big {
+    font-size: 3em;
+    min-height: 64px;
+}
+
+.card-stats .icon-big i {
+    line-height: 59px;
+}
