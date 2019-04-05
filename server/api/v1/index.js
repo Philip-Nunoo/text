@@ -48,7 +48,7 @@ app.use(Meteor.bindEnvironment(connectRoute((router) => {
             const smsRequestId = SmsRequests.insert({
                 to,
                 message,
-                origin: validApp,
+                appId: validApp,
                 status: 'new'
             })
             response = {

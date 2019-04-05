@@ -8,11 +8,14 @@ import {
     AutoField,
     SubmitField,
 } from 'uniforms-bootstrap4';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import SimpleSchema from 'simpl-schema';
+import classnames from 'classnames';
 import {
     Breadcrumb,
     Portlet
 } from './../../components';
+import Gateways from './Gateways';
 
 const SettingsSchema = new SimpleSchema({
     sender: {
@@ -30,6 +33,10 @@ export class Setting extends Component {
     loading: true
   }
 
+  state = {
+    activeTab: '1',
+  }
+
   submitNewSettingForm = doc => {    
     Meteor.call('Setting.update', doc, error => {
       if (error) {
@@ -38,6 +45,14 @@ export class Setting extends Component {
         console.log('saved');
       }
     });
+  }
+
+  toggle = tab => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
   
   render() {
@@ -48,33 +63,62 @@ export class Setting extends Component {
     } = this.props;
 
     return (
-      <>
+      <>        
         <Breadcrumb
           title="Settings"
         />
-        <Portlet>
-          <Portlet.Body>
-            {loading ?
-            <div>Loading...</div> :
-            <AutoForm
-                schema={SettingsSchema}
-                onSubmit={this.submitNewSettingForm}
-                model={setting}
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => this.toggle('1')}
             >
-                <AutoField
-                    name="sender"
-                    disabled={!isAdmin}
-                />
-                <AutoField 
-                    name="txtGhanaSmsToken"
-                    type={isAdmin ? 'text' : 'password'}
-                    disabled={!isAdmin}
-                />
-                <SubmitField disabled={!isAdmin}/>
-            </AutoForm>
-            }
-          </Portlet.Body>
-        </Portlet>
+              General
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => this.toggle('2')}
+            >
+              Gateways
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <Row>
+              <Col sm="12">
+                <Portlet>
+                  <Portlet.Body>
+                    {loading ?
+                    <div>Loading...</div> :
+                    <AutoForm
+                        schema={SettingsSchema}
+                        onSubmit={this.submitNewSettingForm}
+                        model={setting}
+                    >
+                        <AutoField
+                            name="sender"
+                            disabled={!isAdmin}
+                        />
+                        <AutoField 
+                            name="txtGhanaSmsToken"
+                            type={isAdmin ? 'text' : 'password'}
+                            disabled={!isAdmin}
+                        />
+                        <SubmitField disabled={!isAdmin}/>
+                    </AutoForm>
+                    }
+                  </Portlet.Body>
+                </Portlet>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Gateways gateways={setting.gateways || []} />
+          </TabPane>
+        </TabContent>
       </>
     );
   }

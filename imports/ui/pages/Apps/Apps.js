@@ -11,6 +11,7 @@ import {
 } from './../../components';
 import NewAppModal from './NewAppModal';
 import TableRow from './TableRow';
+
 export class Apps extends Component {
   static defaultProps = {
     isAdmin: false,
@@ -79,7 +80,7 @@ export class Apps extends Component {
                   <th/>
                   <th>Name</th>
                   <th>ApiKey</th>
-                  <th>Assigned User</th>
+                  <th>Group app</th>
                   <th>Actions</th>
                 </tr>
               </thead>

@@ -42,7 +42,7 @@ class TableRow extends Component {
                 <td/>
                 <td>{app.name}</td>
                 <td>{app.apiKey ? app.apiKey.key : 'No api key set'}</td>
-                <td>{app.assignedUser}</td>
+                <td>{app.groupId}</td>
                 <td>
                     {isAdmin &&
                     <>
